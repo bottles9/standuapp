@@ -836,6 +836,11 @@
   dependencies:
     "@fullcalendar/daygrid" "~4.4.0"
 
+"@kollegorna/cocoon-vanilla-js@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@kollegorna/cocoon-vanilla-js/-/cocoon-vanilla-js-1.0.6.tgz#37a54550936a57d8dcdb99e63340d379bb99589d"
+  integrity sha512-DeGUU6GKdpE1QBz6FS35u4E5JPYcwiP8ZsrmUquhjCKNXNbQ7EKhBwprF9DyUpZ2NYGVgkwYof8b4iAPx0X9bg==
+
 "@lgaitan/pace-progress@^1.0.7":
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/@lgaitan/pace-progress/-/pace-progress-1.0.7.tgz#c96fbbd9fd4cf528feed34ea0c8f9d8b3e98f0dd"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_21_220517) do
+ActiveRecord::Schema.define(version: 2020_07_21_233414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -56,6 +56,23 @@ ActiveRecord::Schema.define(version: 2020_07_21_220517) do
     t.index ["user_id"], name: "index_standups_on_user_id"
   end
 
+  create_table "task_memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "task_id", null: false
+    t.uuid "standup_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["standup_id"], name: "index_task_memberships_on_standup_id"
+    t.index ["task_id"], name: "index_task_memberships_on_task_id"
+  end
+
+  create_table "tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "type"
+    t.string "title"
+    t.boolean "is_completed"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "team_memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "team_id", null: false
     t.uuid "user_id", null: false
@@ -91,7 +108,6 @@ ActiveRecord::Schema.define(version: 2020_07_21_220517) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.uuid "account_id", null: false
     t.string "invitation_token"
     t.datetime "invitation_created_at"
     t.datetime "invitation_sent_at"
@@ -100,6 +116,7 @@ ActiveRecord::Schema.define(version: 2020_07_21_220517) do
     t.string "invited_by_type"
     t.bigint "invited_by_id"
     t.integer "invitations_count", default: 0
+    t.uuid "account_id"
     t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
@@ -119,6 +136,8 @@ ActiveRecord::Schema.define(version: 2020_07_21_220517) do
 
   add_foreign_key "days_of_the_week_memberships", "teams"
   add_foreign_key "standups", "users"
+  add_foreign_key "task_memberships", "standups"
+  add_foreign_key "task_memberships", "tasks"
   add_foreign_key "team_memberships", "teams"
   add_foreign_key "team_memberships", "users"
   add_foreign_key "teams", "accounts"

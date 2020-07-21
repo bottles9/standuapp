@@ -92,9 +92,9 @@ class StandupsController < ApplicationController
       user_id: current_user.id,
       standup_date: current_date
     )
-    if standup.present? && action_name == 'new'
+    if @standup.present? && action_name == 'new'
       redirect_to(edit_standup_path(date: current_date)) and return true
-    elsif standup.nil? && action_name == 'edit'
+    elsif @standup.nil? && action_name == 'edit'
       redirect_to(new_standup_path(date: current_date)) and return true
     end
   end
